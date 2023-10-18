@@ -547,7 +547,14 @@
             "components": [
                 {
                     "type": "VRController",
-                    "active": true
+                    "active": true,
+                    "VRController": {
+                        "LController": "130",
+                        "RController": "129",
+                        "LHand": "130",
+                        "RHand": "129",
+                        "playerController": "266"
+                    }
                 }
             ]
         },
