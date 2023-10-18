@@ -95,41 +95,42 @@ export class VRController extends Component {
 
         if(inputHand && inputHand.xrInputSource){
 
-
             this.gamepad = inputHand.xrInputSource.gamepad;
 
+            //button
+            //trigger button
             if(this.gamepad.buttons[0].pressed){
 
                 //console.log("The button is 0");
             }
+
+            //squeeze button
             if(this.gamepad.buttons[1].pressed){
 
                 //console.log("The button is 1");
             }
+
+            //thumbstick
             if(this.gamepad.buttons[3].pressed){
 
                 //console.log("The button is 3");
             }
+
+            //LHand = x | RHand = A
             if(this.gamepad.buttons[4].pressed){
 
                 //console.log("The button is 4");
             }
+
+            //LHand = Y | RHand = B
             if(this.gamepad.buttons[5].pressed){
 
                 //console.log("The button is 5");
             }
 
 
-            if(this.gamepad.axes[2] !== 0){
 
-                //console.log("What's happened? left and right?");
-                // this.playerController.moveRight = true;
-                // console.log("?");
-                // if(this.playerController.moveRight === true){
-                //     console.log("!");
-                // }
-            }
-
+            //axes
             //Left
             if(this.gamepad.axes[2] < 0){
 
