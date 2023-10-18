@@ -543,7 +543,13 @@
                 1.0,
                 0.9999998
             ],
-            "parent": null
+            "parent": null,
+            "components": [
+                {
+                    "type": "VRController",
+                    "active": true
+                }
+            ]
         },
         "205": {
             "name": "TrackedSpace",
@@ -2223,14 +2229,6 @@
                 1.0,
                 7.5,
                 0.9999955
-            ]
-        },
-        "290": {
-            "name": "Empty",
-            "components": [
-                {
-                    "type": "VRController"
-                }
             ]
         }
     },
