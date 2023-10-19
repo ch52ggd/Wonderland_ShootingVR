@@ -503,7 +503,8 @@
                     "active": true,
                     "playerController": {
                         "bulletManager": "272",
-                        "gameManager": "270"
+                        "gameManager": "270",
+                        "vrController": "14"
                     }
                 }
             ],
@@ -553,7 +554,8 @@
                         "RController": "129",
                         "LHand": "130",
                         "RHand": "129",
-                        "playerController": "266"
+                        "playerController": "266",
+                        "gameManager": "270"
                     }
                 }
             ]

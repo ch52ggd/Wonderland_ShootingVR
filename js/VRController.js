@@ -1,6 +1,6 @@
 import {Component, InputComponent, Property} from '@wonderlandengine/api';
 
-import {PlayerController} from './playerController.js';
+import {GameManager} from './gameManager.js';
 
 /**
  * VRController
@@ -14,12 +14,22 @@ export class VRController extends Component {
         LHand: Property.object(),
         RHand: Property.object(),
 
-        playerController: Property.object()
+        gameManager: Property.object()
     };
 
-    LnR = false;
-    UnD = false;
 
+
+    selectPressed = false;
+
+
+
+    moveLeft;
+    moveRight;
+    moveUp;
+    moveDown;
+
+
+    
     static onRegister(engine) {
         /* Triggered when this component class is registered.
          * You can for instance register extra component types here
@@ -35,14 +45,15 @@ export class VRController extends Component {
     start() {
         //console.log('start() with param', this.param);
 
-        this.playerController = this.playerController.getComponent(PlayerController);
+        this.gameManager = this.gameManager.getComponent(GameManager);
     }
 
     update(dt) {
         /* Called every frame. */
 
-        this.inputGamepad(this.RHand);
         this.inputGamepad(this.LHand);
+        this.inputGamepad(this.RHand);
+
     }
 
 
@@ -73,16 +84,19 @@ export class VRController extends Component {
     selectstart(e){
 
         //console.log("select start event", e);
+        this.selectPressed = true;
     }
     selectend(e){
 
         //console.log("select end event");
+        this.selectPressed = false;
     }
 
     //squeeze
     squeezestart(e){
 
         //console.log("squeeze start event");
+        this.gameManager.isPlay = !this.gameManager.isPlay;
     }
     squeezeend(e){
 
@@ -97,6 +111,7 @@ export class VRController extends Component {
 
             this.gamepad = inputHand.xrInputSource.gamepad;
 
+            /*
             //button
             //trigger button
             if(this.gamepad.buttons[0].pressed){
@@ -127,33 +142,42 @@ export class VRController extends Component {
 
                 //console.log("The button is 5");
             }
+            */
 
 
 
-            //axes
-            //Left
-            if(this.gamepad.axes[2] < 0){
+            if(this.gamepad && this.gamepad.axes){
 
-                //console.log("Left");
-            }
+                if(inputHand === this.LHand){
 
-            //Right
-            if(this.gamepad.axes[2] > 0){
+                    //Up
+                    if(this.gamepad.axes[3] < 0){
 
-                //console.log("Right");
+                        this.moveUp = true;
+                    }
+                    else this.moveUp = false;
 
-            }
+                    //Down
+                    if(this.gamepad.axes[3] > 0){
 
-            //Up
-            if(this.gamepad.axes[3] < 0){
+                        this.moveDown = true;
+                    }
+                    else this.moveDown = false;
 
-                //console.log("up");
-            }
+                    //Left
+                    if(this.gamepad.axes[2] < 0){
 
-            //Down
-            if(this.gamepad.axes[3] > 0){
+                        this.moveLeft = true;
+                    }
+                    else this.moveLeft = false;
+                    
+                    //Right
+                    if(this.gamepad.axes[2] > 0){
 
-                //console.log("Down");
+                        this.moveRight = true;
+                    }
+                    else this.moveRight = false;
+                }
             }
         }
     }

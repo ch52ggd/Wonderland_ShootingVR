@@ -3,6 +3,8 @@ import {Component, Property, CollisionEventType} from '@wonderlandengine/api';
 import {BulletManager} from './bulletManager.js';
 import {GameManager} from './gameManager.js';
 
+import {VRController} from './VRController.js';
+
 /**
  * playerController
  */
@@ -13,7 +15,8 @@ export class PlayerController extends Component {
         param: Property.float(1.0),
 
         bulletManager: Property.object(),
-        gameManager: Property.object()
+        gameManager: Property.object(),
+        vrController: Property.object()
     };
 
     speed;
@@ -47,6 +50,8 @@ export class PlayerController extends Component {
 
         this.gameManager = this.gameManager.getComponent(GameManager);
 
+        this.vrController = this.vrController.getComponent(VRController);
+
         this.speed = 0.05;
         this.playerPos = [0, 0, -4];
 
@@ -76,10 +81,15 @@ export class PlayerController extends Component {
                     this.time = 0;
                 }
             }
-        }
-        if(this.gameManager.isPlay === false){
 
-            return;
+            if(this.vrController.selectPressed === true){
+
+                if(this.time >= this.spawnInterval){
+
+                    this.bulletManager.spawnBullet();
+                    this.time = 0;
+                }
+            }
         }
     }
 
@@ -109,24 +119,26 @@ export class PlayerController extends Component {
 
         this.playerCurrPos = this.object.getPositionWorld();
 
-        if(this.moveUp === true){
+        //Up
+        if(this.moveUp === true || this.vrController.moveUp === true){
 
             if(this.playerCurrPos[1] < 4) this.playerPos[1] += this.speed;
         }
 
-        if(this.moveDown === true){
+        //Down
+        if(this.moveDown === true || this.vrController.moveDown === true){
 
             if(this.playerCurrPos[1] > -1) this.playerPos[1] -= this.speed;
         }
 
         //Left
-        if(this.moveLeft === true){
+        if(this.moveLeft === true || this.vrController.moveLeft === true){
             
             if(this.playerCurrPos[0] > -2.25) this.playerPos[0] -= this.speed;
         }
 
         //Right
-        if(this.moveRight === true){
+        if(this.moveRight === true || this.vrController.moveRight === true){
 
             if(this.playerCurrPos[0] < 2.25) this.playerPos[0] += this.speed;
         }
@@ -140,6 +152,8 @@ export class PlayerController extends Component {
 
         this.playerPos = [0, 0, -4];
         this.playerCurrPos = [0, 0, -4];
+
+        this.gameManager.score = 0;
     }
 
 
